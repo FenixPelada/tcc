@@ -34,7 +34,7 @@ public class MateriaDAO {
 		for (Materia materia : materiaDB.values()) {
 			materias.add(materia);
 		}
-		return null;
+		return materias;
 	}
 
 	public Materia findById(int id) {

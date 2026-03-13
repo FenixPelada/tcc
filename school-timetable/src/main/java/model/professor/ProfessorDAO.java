@@ -31,11 +31,11 @@ public class ProfessorDAO {
 
 	public List<Professor> listar() {
 
-		ArrayList<Professor> professors = new ArrayList<>();
+		ArrayList<Professor> professores = new ArrayList<>();
 		for (Professor professor : professorDB.values()) {
-			professors.add(professor);
+			professores.add(professor);
 		}
-		return null;
+		return professores;
 	}
 
 	public Professor findById(int id) {

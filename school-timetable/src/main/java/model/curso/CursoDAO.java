@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CursoDAO {
 
-	private HashMap<Integer, Curso> cursoDB;
+	private HashMap<Integer, Curso> cursoDB = new HashMap<Integer, Curso>();
 	private int id;
 
 	public CursoDAO() {
@@ -35,7 +35,7 @@ public class CursoDAO {
 		for (Curso curso : cursoDB.values()) {
 			cursos.add(curso);
 		}
-		return null;
+		return cursos;
 	}
 
 	public Curso findById(int id) {

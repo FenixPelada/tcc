@@ -34,7 +34,7 @@ public class SalaDAO {
 		for (Sala sala : salaDB.values()) {
 			salas.add(sala);
 		}
-		return null;
+		return salas;
 	}
 
 	public Sala findById(int id) {

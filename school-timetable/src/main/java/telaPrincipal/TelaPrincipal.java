@@ -16,7 +16,7 @@ public class TelaPrincipal extends JFrame{
 		setTitle("Tela principal");
 		setSize(1000, 1000);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+		
 		
 		add(new ColunaSala("Salas"));
 		this.add(new ColunaProfessor("Professores"));
