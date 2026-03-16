@@ -76,8 +76,8 @@ public class ColunaProfessor extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Professor professor : professorDAO.listar()) {
-            /*ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor);
-            painelDeItens.add(objetoListaProfessor);*/
+            ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor, this);
+            painelDeItens.add(objetoListaProfessor);
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();

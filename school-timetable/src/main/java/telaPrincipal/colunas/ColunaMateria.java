@@ -77,8 +77,8 @@ public class ColunaMateria extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Materia materia : materiaDAO.listar()) {
-            /*ObjetoListaMateria objetoListaMateria = new ObjetoListaMateria(materia);
-            painelDeItens.add(objetoListaMateria);*/
+            ObjetoListaMateria objetoListaMateria = new ObjetoListaMateria(materia, this);
+            painelDeItens.add(objetoListaMateria);
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();

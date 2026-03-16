@@ -1,11 +1,13 @@
 package model.professor;
 
+import java.util.List;
+
 import model.materia.Materia;
 
 public class Professor {
 	private int id;
 	private String nome;
-	private Materia materia;
+	private List<Materia> materia;
 	
 	public int getId() {
 		return id;
@@ -19,10 +21,10 @@ public class Professor {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Materia getMateria() {
+	public List<Materia> getMateria() {
 		return materia;
 	}
-	public void setMateria(Materia materia) {
+	public void setMateria(List<Materia> materia) {
 		this.materia = materia;
 	}
 	

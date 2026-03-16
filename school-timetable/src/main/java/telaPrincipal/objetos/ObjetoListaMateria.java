@@ -7,19 +7,24 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.materia.Materia;
-import telaPrincipal.colunas.ColunaCurso;
+import model.materia.MateriaDAO;
+import telaPrincipal.colunas.ColunaMateria;
 
 public class ObjetoListaMateria extends JPanel{
 	
 	JButton botaoExcluir;
 	JButton botaoEditar;
 	JPanel painelBotoes;
+	MateriaDAO materiaDAO;
+	
+	public ObjetoListaMateria(Materia materia, ColunaMateria colunaMateria) {
 
-	public ObjetoListaMateria(Materia materia, ColunaCurso colunaCurso) {
-
+		materiaDAO = new MateriaDAO();
+		
 		setLayout(new BorderLayout(10, 0));
 		setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -39,10 +44,25 @@ public class ObjetoListaMateria extends JPanel{
 		add(painelBotoes, BorderLayout.EAST);
 
 		botaoExcluir.addActionListener(e -> {
-			//materiaDAO.remover(curso);
-        	colunaCurso.atualizarLista();
+			materiaDAO.remover(materia);
+        	colunaMateria.atualizarLista();
 		});
 		botaoEditar.addActionListener(e -> {
+        	String nomeMateria = null;
+            
+            while (nomeMateria == null) {
+            	nomeMateria = JOptionPane.showInputDialog(this, "Digite o novo nome da matéria:");
+                if (nomeMateria == null) {
+                    break;
+                } else if (nomeMateria.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    nomeMateria = null;
+                }
+            }
+            
+            materia.setNome(nomeMateria);
+            materiaDAO.editar(materia);
+            colunaMateria.atualizarLista();
 		});
 	}
 }
