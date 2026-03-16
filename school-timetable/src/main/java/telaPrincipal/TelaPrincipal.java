@@ -25,8 +25,5 @@ public class TelaPrincipal extends JFrame{
 		
 		//this.add(painelPrincipal);
 		setLayout(new GridLayout(1, 4, 5, 0));		
-
 	}
-	
-	
 }

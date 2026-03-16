@@ -10,13 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.materia.Materia;
+import telaPrincipal.colunas.ColunaCurso;
 
 public class ObjetoListaMateria extends JPanel{
+	
 	JButton botaoExcluir;
 	JButton botaoEditar;
 	JPanel painelBotoes;
 
-	public ObjetoListaMateria(Materia materia) {
+	public ObjetoListaMateria(Materia materia, ColunaCurso colunaCurso) {
 
 		setLayout(new BorderLayout(10, 0));
 		setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -37,6 +39,8 @@ public class ObjetoListaMateria extends JPanel{
 		add(painelBotoes, BorderLayout.EAST);
 
 		botaoExcluir.addActionListener(e -> {
+			//materiaDAO.remover(curso);
+        	colunaCurso.atualizarLista();
 		});
 		botaoEditar.addActionListener(e -> {
 		});

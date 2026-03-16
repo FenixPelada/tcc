@@ -7,10 +7,12 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.curso.Curso;
 import model.curso.CursoDAO;
+import telaPrincipal.colunas.ColunaCurso;
 
 public class ObjetoListaCurso extends JPanel {
 
@@ -19,7 +21,7 @@ public class ObjetoListaCurso extends JPanel {
     JPanel painelBotoes;
     CursoDAO cursoDAO;
     
-    public ObjetoListaCurso(Curso curso) {
+    public ObjetoListaCurso(Curso curso, ColunaCurso colunaCurso) {
     	
     	cursoDAO = new CursoDAO();
     	
@@ -40,10 +42,29 @@ public class ObjetoListaCurso extends JPanel {
         painelBotoes.add(botaoExcluir);
 
         add(painelBotoes, BorderLayout.EAST);
-
+        
         botaoExcluir.addActionListener(e -> {
         	cursoDAO.remover(curso);
+        	colunaCurso.atualizarLista();
         });
-        botaoEditar.addActionListener(e -> { });
+        
+        botaoEditar.addActionListener(e -> {
+        	String nomeCurso = null;
+            
+            while (nomeCurso == null) {
+                nomeCurso = JOptionPane.showInputDialog(this, "Digite o novo nome do curso:");
+                if (nomeCurso == null) {
+                    break;
+                } else if (nomeCurso.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    nomeCurso = null;
+                }
+            }
+            
+            curso.setNome(nomeCurso);
+            cursoDAO.editar(curso);
+            colunaCurso.atualizarLista();
+        	
+        });
     }
 }

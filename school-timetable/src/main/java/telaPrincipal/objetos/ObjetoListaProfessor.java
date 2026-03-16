@@ -10,13 +10,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.professor.Professor;
+import model.professor.ProfessorDAO;
+import telaPrincipal.colunas.ColunaCurso;
 
 public class ObjetoListaProfessor extends JPanel{
 	JButton botaoExcluir;
     JButton botaoEditar;
     JPanel painelBotoes;
+    ProfessorDAO professorDAO;
     
-    public ObjetoListaProfessor(Professor professor) {
+    public ObjetoListaProfessor(Professor professor, ColunaCurso colunaCurso) {
     	
         setLayout(new BorderLayout(10, 0));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -36,7 +39,9 @@ public class ObjetoListaProfessor extends JPanel{
 
         add(painelBotoes, BorderLayout.EAST);
 
-        botaoExcluir.addActionListener(e -> { });
+        botaoExcluir.addActionListener(e -> {
+        	
+        });
         botaoEditar.addActionListener(e -> { });
     }
 }

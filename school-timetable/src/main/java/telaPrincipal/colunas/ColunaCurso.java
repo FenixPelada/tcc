@@ -17,8 +17,7 @@ import telaPrincipal.objetos.ObjetoListaCurso;
 
 public class ColunaCurso extends CriarColuna {
 
-    //private Curso curso;
-    private CursoDAO cursoDAO;
+	private CursoDAO cursoDAO;
     private JPanel painelDeItens;
     private JScrollPane lista;
     private JButton botaoAdicionar;
@@ -27,7 +26,6 @@ public class ColunaCurso extends CriarColuna {
     public ColunaCurso(String titulo) {
         super(titulo);
         
-        //curso = new Curso();
         cursoDAO = new CursoDAO();
         painelDeItens = new JPanel();
         painelDeItens.setLayout(new BoxLayout(painelDeItens, BoxLayout.Y_AXIS));
@@ -40,7 +38,9 @@ public class ColunaCurso extends CriarColuna {
 
         lista = new JScrollPane(painelScroll);
         lista.setPreferredSize(new Dimension(190, 400));
-
+        
+        atualizarLista();
+        
         botaoAdicionar.addActionListener(e -> {
             //nomeCurso = JOptionPane.showInputDialog(this, "Digite o nome do curso:");
             validadorForm();
@@ -80,7 +80,7 @@ public class ColunaCurso extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Curso curso : cursoDAO.listar()) {
-            ObjetoListaCurso objetoListaCurso = new ObjetoListaCurso(curso);
+            ObjetoListaCurso objetoListaCurso = new ObjetoListaCurso(curso, this);
             painelDeItens.add(objetoListaCurso);
         }
         painelDeItens.revalidate();

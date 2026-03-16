@@ -35,7 +35,10 @@ public class ColunaProfessor extends CriarColuna {
         painelScroll.add(painelDeItens, BorderLayout.NORTH);
         lista = new JScrollPane(painelScroll);
         lista.setPreferredSize(new Dimension(190, 400));
+        
+        atualizarLista();
 
+        
         botaoAdicionar.addActionListener(e -> {
             validadorForm();
         });
@@ -73,8 +76,8 @@ public class ColunaProfessor extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Professor professor : professorDAO.listar()) {
-            ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor);
-            painelDeItens.add(objetoListaProfessor);
+            /*ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor);
+            painelDeItens.add(objetoListaProfessor);*/
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();

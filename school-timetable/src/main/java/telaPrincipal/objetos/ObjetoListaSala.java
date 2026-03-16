@@ -10,13 +10,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.sala.Sala;
+import telaPrincipal.colunas.ColunaCurso;
 
 public class ObjetoListaSala extends JPanel{
 	JButton botaoExcluir;
     JButton botaoEditar;
     JPanel painelBotoes;
     
-    public ObjetoListaSala(Sala sala) {
+    public ObjetoListaSala(Sala sala, ColunaCurso colunaCurso) {
     	
         setLayout(new BorderLayout(10, 0));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));

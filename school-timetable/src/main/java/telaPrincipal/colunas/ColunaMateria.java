@@ -37,7 +37,9 @@ public class ColunaMateria extends CriarColuna {
         painelScroll.add(painelDeItens, BorderLayout.NORTH);
         lista = new JScrollPane(painelScroll);
         lista.setPreferredSize(new Dimension(190, 400));
-
+        
+        atualizarLista();
+        
         botaoAdicionar.addActionListener(e -> {
             validadorForm();
         });
@@ -75,8 +77,8 @@ public class ColunaMateria extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Materia materia : materiaDAO.listar()) {
-            ObjetoListaMateria objetoListaMateria = new ObjetoListaMateria(materia);
-            painelDeItens.add(objetoListaMateria);
+            /*ObjetoListaMateria objetoListaMateria = new ObjetoListaMateria(materia);
+            painelDeItens.add(objetoListaMateria);*/
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();
