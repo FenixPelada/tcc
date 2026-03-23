@@ -63,7 +63,7 @@ public class ObjetoListaProfessor extends JPanel {
         painelBotoes.add(botaoVincular);
 
         add(painelBotoes, BorderLayout.EAST);
-        
+
         botaoExcluir.addActionListener(e -> {
             professorDAO.remover(professor);
             colunaProfessor.atualizarLista();

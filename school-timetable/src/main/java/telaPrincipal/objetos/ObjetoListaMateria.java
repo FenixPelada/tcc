@@ -16,57 +16,56 @@ import telaPrincipal.colunas.ColunaMateria;
 
 public class ObjetoListaMateria extends JPanel {
 
-	JButton botaoExcluir;
-	JButton botaoEditar;
-	JPanel painelBotoes;
-	MateriaDAO materiaDAO;
+    JButton botaoExcluir;
+    JButton botaoEditar;
+    JPanel painelBotoes;
+    MateriaDAO materiaDAO;
 
-	public ObjetoListaMateria(Materia materia, ColunaMateria colunaMateria) {
+    public ObjetoListaMateria(Materia materia, ColunaMateria colunaMateria) {
 
-		materiaDAO = new MateriaDAO();
+        materiaDAO = new MateriaDAO();
 
-		setLayout(new BorderLayout(10, 0));
-		setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        setLayout(new BorderLayout(10, 0));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        setAlignmentX(Component.LEFT_ALIGNMENT);
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
-		add(new JLabel(materia.getNome()), BorderLayout.WEST);
+        add(new JLabel(materia.getNome()), BorderLayout.WEST);
 
-		painelBotoes = new JPanel();
-		painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
+        painelBotoes = new JPanel();
+        painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
 
-		botaoEditar = new JButton("Editar");
-		botaoExcluir = new JButton("Excluir");
+        botaoEditar  = new JButton("Editar");
+        botaoExcluir = new JButton("Excluir");
 
-		painelBotoes.add(botaoEditar);
-		painelBotoes.add(botaoExcluir);
+        painelBotoes.add(botaoEditar);
+        painelBotoes.add(botaoExcluir);
 
-		add(painelBotoes, BorderLayout.EAST);
+        add(painelBotoes, BorderLayout.EAST);
 
-		botaoExcluir.addActionListener(e -> {
-			materiaDAO.remover(materia);
-			colunaMateria.atualizarLista();
-		});
-		botaoEditar.addActionListener(e -> {
-			String nomeMateria = null;
+        botaoExcluir.addActionListener(e -> {
+            materiaDAO.remover(materia);
+            colunaMateria.atualizarLista();
+        });
 
-			while (nomeMateria == null) {
-				nomeMateria = JOptionPane.showInputDialog(this, "Digite o novo nome da matéria:");
-				if (nomeMateria == null) {
-					break;
-				} else if (nomeMateria.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro",
-							JOptionPane.ERROR_MESSAGE);
-					nomeMateria = null;
-				}
-			}
+        botaoEditar.addActionListener(e -> {
+            String nomeMateria = null;
 
-			if (nomeMateria != null) {
-				materia.setNome(nomeMateria);
-				materiaDAO.editar(materia);
-				colunaMateria.atualizarLista();
-			}
+            while (nomeMateria == null) {
+                nomeMateria = JOptionPane.showInputDialog(this, "Digite o novo nome da matéria:");
+                if (nomeMateria == null) {
+                    break;
+                } else if (nomeMateria.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    nomeMateria = null;
+                }
+            }
 
-		});
-	}
+            if (nomeMateria != null) {
+                materia.setNome(nomeMateria);
+                materiaDAO.editar(materia);
+                colunaMateria.atualizarLista();
+            }
+        });
+    }
 }

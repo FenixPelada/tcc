@@ -15,65 +15,65 @@ import model.sala.SalaDAO;
 import telaPrincipal.colunas.ColunaSala;
 
 public class ObjetoListaSala extends JPanel {
-	JButton botaoExcluir;
-	JButton botaoEditar;
-	JPanel painelBotoes;
-	SalaDAO salaDAO;
 
-	public ObjetoListaSala(Sala sala, ColunaSala colunaSala) {
+    JButton botaoExcluir;
+    JButton botaoEditar;
+    JPanel painelBotoes;
+    SalaDAO salaDAO;
 
-		setLayout(new BorderLayout(10, 0));
-		setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+    public ObjetoListaSala(Sala sala, ColunaSala colunaSala) {
 
-		salaDAO = new SalaDAO();
+        salaDAO = new SalaDAO();
 
-		String numeroSala = Integer.toString(sala.getNumero());
+        setLayout(new BorderLayout(10, 0));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        setAlignmentX(Component.LEFT_ALIGNMENT);
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
-		add(new JLabel(numeroSala), BorderLayout.WEST);
+        String numeroSala = Integer.toString(sala.getNumero());
+        add(new JLabel(numeroSala), BorderLayout.WEST);
 
-		painelBotoes = new JPanel();
-		painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
+        painelBotoes = new JPanel();
+        painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
 
-		botaoEditar = new JButton("Editar");
-		botaoExcluir = new JButton("Excluir");
+        botaoEditar  = new JButton("Editar");
+        botaoExcluir = new JButton("Excluir");
 
-		painelBotoes.add(botaoEditar);
-		painelBotoes.add(botaoExcluir);
+        painelBotoes.add(botaoEditar);
+        painelBotoes.add(botaoExcluir);
 
-		add(painelBotoes, BorderLayout.EAST);
+        add(painelBotoes, BorderLayout.EAST);
 
-		botaoExcluir.addActionListener(e -> {
-			salaDAO.remover(sala);
-			colunaSala.atualizarLista();
-		});
+        botaoExcluir.addActionListener(e -> {
+            salaDAO.remover(sala);
+            colunaSala.atualizarLista();
+        });
 
-		botaoEditar.addActionListener(e -> {
-			String numSala = null;
+        botaoEditar.addActionListener(e -> {
+            String numSala = null;
 
-			while (numSala == null) {
-				numSala = JOptionPane.showInputDialog(this, "Digite o número da sala:");
+            while (numSala == null) {
+                numSala = JOptionPane.showInputDialog(this, "Digite o novo número da sala:");
+                if (numSala == null) {
+                    break;
+                }
+                try {
+                    Integer.parseInt(numSala.trim());
+                    if (numSala.trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "O número não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        numSala = null;
+                    }
+                } catch (NumberFormatException a) {
+                    JOptionPane.showMessageDialog(this, "Digite apenas números!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    numSala = null;
+                }
+            }
 
-				try {
-					int numeroSalaFormat = Integer.parseInt(numSala.trim());
-					if (numSala == null) {
-						break;
-					} else if (numSala.trim().isEmpty()) {
-						JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro",
-								JOptionPane.ERROR_MESSAGE);
-						numSala = null;
-					}
-				} catch (NumberFormatException a) {
-					JOptionPane.showMessageDialog(this, "Digite apenas números!", "Erro", JOptionPane.ERROR_MESSAGE);
-					numSala = null;
-				}
-			}
-			if (numSala != null) {
-				sala.setNumero(Integer.parseInt(numSala));
-				salaDAO.editar(sala);
-				colunaSala.atualizarLista();
-			}
-		});
-	}
+            if (numSala != null) {
+                sala.setNumero(Integer.parseInt(numSala));
+                salaDAO.editar(sala);
+                colunaSala.atualizarLista();
+            }
+        });
+    }
 }
