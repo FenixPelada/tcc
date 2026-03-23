@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoDB {
-	private static final String URL = "jdbc:mysql://localhost:3306/javabase";
+	private static final String URL = "jdbc:mysql://mysql:3306/javabase";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 

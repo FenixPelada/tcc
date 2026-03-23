@@ -76,8 +76,8 @@ public class ColunaSala extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Sala sala : salaDAO.listar()) {
-            /*ObjetoListaSala objetoListaSala = new ObjetoListaSala(sala);
-            painelDeItens.add(objetoListaSala);*/
+            ObjetoListaSala objetoListaSala = new ObjetoListaSala(sala, this);
+            painelDeItens.add(objetoListaSala);
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();

@@ -3,12 +3,14 @@ package telaPrincipal.colunas;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 import model.professor.Professor;
 import model.professor.ProfessorDAO;
 import telaPrincipal.objetos.ObjetoListaProfessor;
@@ -76,8 +78,8 @@ public class ColunaProfessor extends CriarColuna {
     public void atualizarLista() {
         painelDeItens.removeAll();
         for (Professor professor : professorDAO.listar()) {
-            /*ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor);
-            painelDeItens.add(objetoListaProfessor);*/
+            ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor, this);
+            painelDeItens.add(objetoListaProfessor);
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();

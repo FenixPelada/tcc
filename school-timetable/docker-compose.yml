@@ -1,0 +1,26 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-timetable
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: javabase
+    ports:
+      - "3306:3306"
+    volumes:
+      - dados_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: app-timetable
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  dados_mysql:
