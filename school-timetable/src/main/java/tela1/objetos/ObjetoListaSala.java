@@ -1,4 +1,4 @@
-package telaPrincipal.objetos;
+package tela1.objetos;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import model.sala.Sala;
 import model.sala.SalaDAO;
-import telaPrincipal.colunas.ColunaSala;
+import tela1.colunas.ColunaSala;
 
 public class ObjetoListaSala extends JPanel {
 

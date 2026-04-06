@@ -96,7 +96,42 @@ public class ProfessorDAO {
         professor.setNome(rs.getString("nome"));
         return professor;
     }
+    
+    public void salvarDisponibilidade(Professor professor) {
+        try {
+            sql = "DELETE FROM tb_professor_disponibilidade WHERE id_professor = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, professor.getId());
+            pstm.executeUpdate();
 
+            sql = "INSERT INTO tb_professor_disponibilidade (id_professor, dia) VALUES (?, ?)";
+            pstm = conn.prepareStatement(sql);
+            for (DiasIndisponiveis dia : professor.getDiasIndisponiveis()) {
+                pstm.setInt(1, professor.getId());
+                pstm.setString(2, dia.name());
+                pstm.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<DiasIndisponiveis> carregarDisponibilidade(Professor professor) {
+        List<DiasIndisponiveis> dias = new ArrayList<>();
+        try {
+            sql = "SELECT dia FROM tb_professor_disponibilidade WHERE id_professor = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, professor.getId());
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                dias.add(DiasIndisponiveis.valueOf(rs.getString("dia")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dias;
+    }
+    
     public void fechar() {
         try {
             pstm.close();

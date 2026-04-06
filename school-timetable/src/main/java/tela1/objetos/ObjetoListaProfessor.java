@@ -1,10 +1,10 @@
-package telaPrincipal.objetos;
+package tela1.objetos;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,40 +15,34 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.curso.Curso;
-import model.curso.CursoDAO;
 import model.materia.Materia;
 import model.materia.MateriaDAO;
-import model.relacao.MateriaCursoDAO;
-import telaPrincipal.colunas.ColunaCurso;
+import model.professor.Professor;
+import model.professor.ProfessorDAO;
+import model.relacao.ProfessorMateriaDAO;
+import tela1.colunas.ColunaProfessor;
 
-public class ObjetoListaCurso extends JPanel {
+public class ObjetoListaProfessor extends JPanel {
 
     JButton botaoExcluir;
     JButton botaoEditar;
     JButton botaoVincular;
     JPanel painelBotoes;
-    JPanel painelLista;
-    CursoDAO cursoDAO;
-    MateriaDAO materiaDAO;
-    MateriaCursoDAO cursoMateriaDAO;
-    List<Materia> todasMaterias;
-    List<Materia> materiasVinculadas;
-    JDialog dialog;
-    
-    public ObjetoListaCurso(Curso curso, ColunaCurso colunaCurso) {
-    	
-        cursoDAO = new CursoDAO();
+    ProfessorDAO professorDAO;
+
+    public ObjetoListaProfessor(Professor professor, ColunaProfessor colunaProfessor) {
+
+        professorDAO = new ProfessorDAO();
 
         setLayout(new BorderLayout(10, 0));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         setAlignmentX(Component.LEFT_ALIGNMENT);
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
-        add(new JLabel(curso.getNome()), BorderLayout.WEST);
+        add(new JLabel(professor.getNome()), BorderLayout.WEST);
 
-        botaoEditar = new JButton("Editar");
-        botaoExcluir = new JButton("Excluir");
+        botaoEditar   = new JButton("Editar");
+        botaoExcluir  = new JButton("Excluir");
         botaoVincular = new JButton("Vincular");
 
         botaoEditar.setPreferredSize(new Dimension(80, 25));
@@ -69,50 +63,47 @@ public class ObjetoListaCurso extends JPanel {
         painelBotoes.add(botaoVincular);
 
         add(painelBotoes, BorderLayout.EAST);
-                
+
         botaoExcluir.addActionListener(e -> {
-            cursoDAO.remover(curso);
-            colunaCurso.atualizarLista();
+            professorDAO.remover(professor);
+            colunaProfessor.atualizarLista();
         });
 
         botaoEditar.addActionListener(e -> {
-            String nomeCurso = null;
+            String nomeProfessor = null;
 
-            while (nomeCurso == null) {
-                nomeCurso = JOptionPane.showInputDialog(this, "Digite o novo nome do curso:");
-                if (nomeCurso == null) {
+            while (nomeProfessor == null) {
+                nomeProfessor = JOptionPane.showInputDialog(this, "Digite o novo nome do professor:");
+                if (nomeProfessor == null) {
                     break;
-                } else if (nomeCurso.trim().isEmpty()) {
+                } else if (nomeProfessor.trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    nomeCurso = null;
+                    nomeProfessor = null;
                 }
             }
 
-            if (nomeCurso != null) {
-                curso.setNome(nomeCurso);
-                cursoDAO.editar(curso);
-                colunaCurso.atualizarLista();
+            if (nomeProfessor != null) {
+                professor.setNome(nomeProfessor);
+                professorDAO.editar(professor);
+                colunaProfessor.atualizarLista();
             }
         });
 
         botaoVincular.addActionListener(e -> {
-            // busca todas as matérias disponíveis
-        	materiaDAO = new MateriaDAO();
-            cursoMateriaDAO = new MateriaCursoDAO();
-            todasMaterias = materiaDAO.listar();
-            materiasVinculadas = cursoMateriaDAO.listarMateriasPorCurso(curso);
+            MateriaDAO materiaDAO = new MateriaDAO();
+            ProfessorMateriaDAO professorMateriaDAO = new ProfessorMateriaDAO();
+            List<Materia> todasMaterias = materiaDAO.listar();
+            List<Materia> materiasVinculadas = professorMateriaDAO.listarMateriasPorProfessor(professor);
 
-            // monta o JDialog
-            dialog = new JDialog();
-            dialog.setTitle("Vincular matérias ao curso: " + curso.getNome());
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Vincular matérias ao professor: " + professor.getNome());
             dialog.setSize(300, 400);
             dialog.setLocationRelativeTo(this);
             dialog.setLayout(new BorderLayout());
 
-            painelLista = new JPanel();
+            JPanel painelLista = new JPanel();
             painelLista.setLayout(new BoxLayout(painelLista, BoxLayout.Y_AXIS));
 
-            // cria um checkbox para cada matéria
             List<JCheckBox> checkboxes = new ArrayList<>();
             for (Materia materia : todasMaterias) {
                 boolean jaVinculada = materiasVinculadas.stream()
@@ -131,9 +122,9 @@ public class ObjetoListaCurso extends JPanel {
                         .anyMatch(m -> m.getId() == materia.getId());
 
                     if (cb.isSelected() && !eraVinculada) {
-                        cursoMateriaDAO.vincular(curso, materia);
+                        professorMateriaDAO.vincular(professor, materia);
                     } else if (!cb.isSelected() && eraVinculada) {
-                        cursoMateriaDAO.desvincular(curso, materia);
+                        professorMateriaDAO.desvincular(professor, materia);
                     }
                 }
                 dialog.dispose();

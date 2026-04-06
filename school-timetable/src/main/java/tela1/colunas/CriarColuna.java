@@ -1,4 +1,4 @@
-package telaPrincipal.colunas;
+package tela1.colunas;
 
 import java.awt.Color;
 import java.awt.Component;

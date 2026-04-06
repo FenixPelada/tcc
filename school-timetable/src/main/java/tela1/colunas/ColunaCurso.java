@@ -1,0 +1,110 @@
+package tela1.colunas;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import model.curso.Curso;
+import model.curso.CursoDAO;
+import tela1.objetos.ObjetoListaCurso;
+
+public class ColunaCurso extends CriarColuna {
+
+	private CursoDAO cursoDAO;
+    private JPanel painelDeItens;
+    private JScrollPane lista;
+    private JButton botaoAdicionar;
+    private JPanel painelScroll;
+    private JButton botaoProximaTela;
+    
+    public ColunaCurso(String titulo, CardLayout cardLayout, JPanel container) {
+        super(titulo);
+        
+        botaoProximaTela = new JButton("Próximo"); 
+        cursoDAO = new CursoDAO();
+        painelDeItens = new JPanel();
+        painelDeItens.setLayout(new BoxLayout(painelDeItens, BoxLayout.Y_AXIS));
+        
+        botaoAdicionar = new JButton("Novo curso");
+        botaoAdicionar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        painelScroll = new JPanel(new BorderLayout());
+        painelScroll.add(painelDeItens, BorderLayout.NORTH);
+
+        lista = new JScrollPane(painelScroll);
+        lista.setPreferredSize(new Dimension(190, 400));
+        
+        atualizarLista();
+        
+        botaoAdicionar.addActionListener(e -> {
+            //nomeCurso = JOptionPane.showInputDialog(this, "Digite o nome do curso:");
+            validadorForm();
+            //adicionar(nomeCurso.trim());
+        });
+
+        add(Box.createVerticalStrut(5));
+        add(botaoAdicionar);
+        add(Box.createVerticalStrut(10));
+        add(lista);
+        
+        botaoProximaTela.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        add(Box.createVerticalStrut(5));
+        add(botaoAdicionar);
+        add(Box.createVerticalStrut(10));
+        add(lista);
+        add(Box.createVerticalStrut(10));
+        add(botaoProximaTela);
+        
+        botaoProximaTela.addActionListener(e -> {
+        	cardLayout.show(container, "Tela 2");
+        });
+
+    }
+    
+    public void validadorForm() {
+        String nomeCurso = null;
+
+        while (nomeCurso == null) {
+            nomeCurso = JOptionPane.showInputDialog(this, "Digite o nome do curso:");
+            if (nomeCurso == null) {
+                break;
+            }
+            if (nomeCurso.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+                nomeCurso = null;
+            } else {
+                adicionar(nomeCurso.trim());
+            }
+        }
+    }
+    
+    public void adicionar(String nome) {
+        Curso novoCurso = new Curso();
+        novoCurso.setNome(nome);
+        cursoDAO.adicionar(novoCurso);
+        atualizarLista();
+    }
+
+    public void atualizarLista() {
+        painelDeItens.removeAll();
+        for (Curso curso : cursoDAO.listar()) {
+            ObjetoListaCurso objetoListaCurso = new ObjetoListaCurso(curso, this);
+            painelDeItens.add(objetoListaCurso);
+        }
+        painelDeItens.revalidate();
+        painelDeItens.repaint();
+    }
+    
+    public void proximaTela() {
+    	
+    }
+}

@@ -7,6 +7,7 @@ import model.materia.Materia;
 public class Professor {
 	private int id;
 	private String nome;
+	private List<DiasIndisponiveis> diasIndisponiveis;
 	private List<Materia> materia;
 	
 	public int getId() {
@@ -26,6 +27,12 @@ public class Professor {
 	}
 	public void setMateria(List<Materia> materia) {
 		this.materia = materia;
+	}
+	public List<DiasIndisponiveis> getDiasIndisponiveis() {
+		return diasIndisponiveis;
+	}
+	public void setDiasIndisponiveis(List<DiasIndisponiveis> diasIndisponiveis) {
+		this.diasIndisponiveis = diasIndisponiveis;
 	}
 	
 }

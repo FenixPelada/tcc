@@ -1,4 +1,4 @@
-package telaPrincipal.colunas;
+package tela1.colunas;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -11,40 +11,38 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.curso.Curso;
-import model.curso.CursoDAO;
-import telaPrincipal.objetos.ObjetoListaCurso;
+import model.professor.Professor;
+import model.professor.ProfessorDAO;
+import tela1.objetos.ObjetoListaProfessor;
 
-public class ColunaCurso extends CriarColuna {
+public class ColunaProfessor extends CriarColuna {
 
-	private CursoDAO cursoDAO;
+    private ProfessorDAO professorDAO;
     private JPanel painelDeItens;
     private JScrollPane lista;
     private JButton botaoAdicionar;
     private JPanel painelScroll;
-    
-    public ColunaCurso(String titulo) {
+
+    public ColunaProfessor(String titulo) {
         super(titulo);
-        
-        cursoDAO = new CursoDAO();
+
+        professorDAO = new ProfessorDAO();
         painelDeItens = new JPanel();
         painelDeItens.setLayout(new BoxLayout(painelDeItens, BoxLayout.Y_AXIS));
-        
-        botaoAdicionar = new JButton("Novo curso");
+
+        botaoAdicionar = new JButton("Novo professor");
         botaoAdicionar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
+
         painelScroll = new JPanel(new BorderLayout());
         painelScroll.add(painelDeItens, BorderLayout.NORTH);
-
         lista = new JScrollPane(painelScroll);
         lista.setPreferredSize(new Dimension(190, 400));
         
         atualizarLista();
+
         
         botaoAdicionar.addActionListener(e -> {
-            //nomeCurso = JOptionPane.showInputDialog(this, "Digite o nome do curso:");
             validadorForm();
-            //adicionar(nomeCurso.trim());
         });
 
         add(Box.createVerticalStrut(5));
@@ -52,36 +50,36 @@ public class ColunaCurso extends CriarColuna {
         add(Box.createVerticalStrut(10));
         add(lista);
     }
-    
-    public void validadorForm() {
-        String nomeCurso = null;
 
-        while (nomeCurso == null) {
-            nomeCurso = JOptionPane.showInputDialog(this, "Digite o nome do curso:");
-            if (nomeCurso == null) {
+    public void validadorForm() {
+        String nomeProfessor = null;
+
+        while (nomeProfessor == null) {
+            nomeProfessor = JOptionPane.showInputDialog(this, "Digite o nome do professor:");
+            if (nomeProfessor == null) {
                 break;
             }
-            if (nomeCurso.trim().isEmpty()) {
+            if (nomeProfessor.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "O nome não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
-                nomeCurso = null;
+                nomeProfessor = null;
             } else {
-                adicionar(nomeCurso.trim());
+                adicionar(nomeProfessor.trim());
             }
         }
     }
-    
+
     public void adicionar(String nome) {
-        Curso novoCurso = new Curso();
-        novoCurso.setNome(nome);
-        cursoDAO.adicionar(novoCurso);
+        Professor novoProfessor = new Professor();
+        novoProfessor.setNome(nome);
+        professorDAO.adicionar(novoProfessor);
         atualizarLista();
     }
 
     public void atualizarLista() {
         painelDeItens.removeAll();
-        for (Curso curso : cursoDAO.listar()) {
-            ObjetoListaCurso objetoListaCurso = new ObjetoListaCurso(curso, this);
-            painelDeItens.add(objetoListaCurso);
+        for (Professor professor : professorDAO.listar()) {
+            ObjetoListaProfessor objetoListaProfessor = new ObjetoListaProfessor(professor, this);
+            painelDeItens.add(objetoListaProfessor);
         }
         painelDeItens.revalidate();
         painelDeItens.repaint();

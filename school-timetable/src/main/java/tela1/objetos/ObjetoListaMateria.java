@@ -1,4 +1,4 @@
-package telaPrincipal.objetos;
+package tela1.objetos;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import model.materia.Materia;
 import model.materia.MateriaDAO;
-import telaPrincipal.colunas.ColunaMateria;
+import tela1.colunas.ColunaMateria;
 
 public class ObjetoListaMateria extends JPanel {
 

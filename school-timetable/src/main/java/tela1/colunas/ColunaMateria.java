@@ -1,4 +1,4 @@
-package telaPrincipal.colunas;
+package tela1.colunas;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 
 import model.materia.Materia;
 import model.materia.MateriaDAO;
-import telaPrincipal.objetos.ObjetoListaMateria;
+import tela1.objetos.ObjetoListaMateria;
 
 public class ColunaMateria extends CriarColuna {
 
